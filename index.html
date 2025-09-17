@@ -28,6 +28,9 @@
             background-color: #f8f9fa;
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .container {
@@ -82,7 +85,7 @@
             transition: var(--transition);
         }
 
-        nav ul li a:hover {
+        nav ul li a:hover, nav ul li a.active {
             color: var(--primary);
         }
 
@@ -99,6 +102,7 @@
             transition: var(--transition);
             cursor: pointer;
             border: none;
+            display: inline-block;
         }
 
         .btn-outline {
@@ -122,6 +126,38 @@
             color: white;
         }
 
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #c0392b;
+        }
+
+        /* Page Content */
+        .page-content {
+            flex: 1;
+            padding: 30px 0;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1560472355-536de3962603?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
@@ -130,6 +166,8 @@
             color: white;
             padding: 80px 0;
             text-align: center;
+            border-radius: 8px;
+            margin-bottom: 40px;
         }
 
         .hero h1 {
@@ -196,6 +234,7 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .category-card:hover {
@@ -289,6 +328,7 @@
             background-color: var(--light);
             padding: 50px 0;
             margin: 50px 0;
+            border-radius: 8px;
         }
 
         .steps {
@@ -312,11 +352,36 @@
             margin-bottom: 10px;
         }
 
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
         /* Footer */
         footer {
             background-color: var(--dark);
             color: white;
             padding: 50px 0 20px;
+            margin-top: auto;
         }
 
         .footer-content {
@@ -380,6 +445,12 @@
             
             nav ul {
                 margin: 15px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
             }
             
             .auth-buttons {
@@ -414,168 +485,496 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">
+                <a href="#" class="logo" onclick="showPage('home')">
                     <i class="fas fa-store"></i>
                     ArtisanMarket
                 </a>
                 <nav>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">Sell</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('categories')">Categories</a></li>
+                        <li><a href="#" onclick="showPage('sell')">Sell</a></li>
+                        <li><a href="#" onclick="showPage('about')">About</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
                     </ul>
                 </nav>
                 <div class="auth-buttons">
-                    <button class="btn btn-outline">Log In</button>
-                    <button class="btn btn-primary">Sign Up</button>
+                    <button class="btn btn-outline" onclick="showLogin()">Log In</button>
+                    <button class="btn btn-primary" onclick="showSignup()">Sign Up</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Discover Unique Creations from Talented Artisans</h1>
-            <p>Buy and sell handmade, vintage, and craft supplies directly from independent makers around the world.</p>
-            <div class="search-bar">
-                <input type="text" placeholder="Search for products, categories, or sellers...">
-                <button><i class="fas fa-search"></i> Search</button>
-            </div>
-        </div>
-    </section>
+    <!-- Main Content -->
+    <div class="container page-content">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>Discover Unique Creations from Talented Artisans</h1>
+                <p>Buy and sell handmade, vintage, and craft supplies directly from independent makers around the world.</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products, categories, or sellers...">
+                    <button><i class="fas fa-search"></i> Search</button>
+                </div>
+            </section>
 
-    <!-- Categories Section -->
-    <section class="container">
-        <h2 class="section-title">Popular Categories</h2>
-        <div class="categories">
-            <div class="category-card">
-                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
-                <div class="category-content">
-                    <h3>Handmade Jewelry</h3>
-                    <p>1,240 products</p>
+            <!-- Categories Section -->
+            <section>
+                <h2 class="section-title">Popular Categories</h2>
+                <div class="categories">
+                    <div class="category-card" onclick="showPage('categories')">
+                        <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="category-content">
+                            <h3>Handmade Jewelry</h3>
+                            <p>1,240 products</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showPage('categories')">
+                        <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="category-content">
+                            <h3>Home Decor</h3>
+                            <p>980 products</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showPage('categories')">
+                        <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="category-content">
+                            <h3>Clothing</h3>
+                            <p>1,560 products</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showPage('categories')">
+                        <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                        <div class="category-content">
+                            <h3>Artwork</h3>
+                            <p>850 products</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="category-card">
-                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
-                <div class="category-content">
-                    <h3>Home Decor</h3>
-                    <p>980 products</p>
-                </div>
-            </div>
-            <div class="category-card">
-                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
-                <div class="category-content">
-                    <h3>Clothing</h3>
-                    <p>1,560 products</p>
-                </div>
-            </div>
-            <div class="category-card">
-                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
-                <div class="category-content">
-                    <h3>Artwork</h3>
-                    <p>850 products</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Featured Listings -->
-    <section class="container">
-        <h2 class="section-title">Featured Listings</h2>
-        <div class="listings">
-            <div class="listing-card">
-                <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
-                    <div class="listing-badge">Featured</div>
-                </div>
-                <div class="listing-content">
-                    <h3 class="listing-title">Handcrafted Silver Necklace</h3>
-                    <div class="listing-meta">
-                        <span><i class="fas fa-user"></i> CraftedByAnna</span>
-                        <span><i class="fas fa-star"></i> 4.8 (42)</span>
+            <!-- Featured Listings -->
+            <section>
+                <h2 class="section-title">Featured Listings</h2>
+                <div class="listings">
+                    <div class="listing-card">
+                        <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                            <div class="listing-badge">Featured</div>
+                        </div>
+                        <div class="listing-content">
+                            <h3 class="listing-title">Handcrafted Silver Necklace</h3>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> CraftedByAnna</span>
+                                <span><i class="fas fa-star"></i> 4.8 (42)</span>
+                            </div>
+                            <p class="listing-price">$89.99</p>
+                            <div class="listing-actions">
+                                <button class="btn btn-outline">Make Offer</button>
+                                <button class="btn btn-primary">Buy Now</button>
+                            </div>
+                        </div>
                     </div>
-                    <p class="listing-price">$89.99</p>
-                    <div class="listing-actions">
-                        <button class="btn btn-outline">Make Offer</button>
-                        <button class="btn btn-primary">Buy Now</button>
+                    <div class="listing-card">
+                        <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1571781926291-47774a3e6c4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                            <div class="listing-badge">Premium</div>
+                        </div>
+                        <div class="listing-content">
+                            <h3 class="listing-title">Hand-painted Ceramic Vase</h3>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> ArtisanPottery</span>
+                                <span><i class="fas fa-star"></i> 4.9 (56)</span>
+                            </div>
+                            <p class="listing-price">$124.50</p>
+                            <div class="listing-actions">
+                                <button class="btn btn-outline">Make Offer</button>
+                                <button class="btn btn-primary">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="listing-card">
+                        <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                            <div class="listing-badge">New</div>
+                        </div>
+                        <div class="listing-content">
+                            <h3 class="listing-title">Leather Crossbody Bag</h3>
+                            <div class="listing-meta">
+                                <span><i class="fas fa-user"></i> LeatherCraftCo</span>
+                                <span><i class="fas fa-star"></i> 4.7 (38)</span>
+                            </div>
+                            <p class="listing-price">$145.00</p>
+                            <div class="listing-actions">
+                                <button class="btn btn-outline">Make Offer</button>
+                                <button class="btn btn-primary">Buy Now</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="listing-card">
-                <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1571781926291-47774a3e6c4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
-                    <div class="listing-badge">Premium</div>
-                </div>
-                <div class="listing-content">
-                    <h3 class="listing-title">Hand-painted Ceramic Vase</h3>
-                    <div class="listing-meta">
-                        <span><i class="fas fa-user"></i> ArtisanPottery</span>
-                        <span><i class="fas fa-star"></i> 4.9 (56)</span>
-                    </div>
-                    <p class="listing-price">$124.50</p>
-                    <div class="listing-actions">
-                        <button class="btn btn-outline">Make Offer</button>
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div class="listing-card">
-                <div class="listing-img" style="background-image: url('https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
-                    <div class="listing-badge">New</div>
-                </div>
-                <div class="listing-content">
-                    <h3 class="listing-title">Leather Crossbody Bag</h3>
-                    <div class="listing-meta">
-                        <span><i class="fas fa-user"></i> LeatherCraftCo</span>
-                        <span><i class="fas fa-star"></i> 4.7 (38)</span>
-                    </div>
-                    <p class="listing-price">$145.00</p>
-                    <div class="listing-actions">
-                        <button class="btn btn-outline">Make Offer</button>
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- How It Works Section -->
-    <section class="how-it-works">
-        <div class="container">
-            <h2 class="section-title">How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-user-plus"></i>
+            <!-- How It Works Section -->
+            <section class="how-it-works">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h3>Create an Account</h3>
+                        <p>Sign up as a buyer or seller in just a few simple steps.</p>
                     </div>
-                    <h3>Create an Account</h3>
-                    <p>Sign up as a buyer or seller in just a few simple steps.</p>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-list-alt"></i>
+                        </div>
+                        <h3>List Your Products</h3>
+                        <p>Create detailed listings with photos and descriptions.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Secure Transactions</h3>
+                        <p>Our escrow system ensures safe payments for both parties.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Shipping & Delivery</h3>
+                        <p>Products are shipped directly with tracking information.</p>
+                    </div>
                 </div>
-                <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-list-alt"></i>
+            </section>
+        </div>
+
+        <!-- Categories Page -->
+        <div id="categories" class="page">
+            <h2 class="section-title">Product Categories</h2>
+            
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3>Handmade Jewelry</h3>
+                        <p>1,240 products</p>
+                        <button class="btn btn-primary">Browse</button>
                     </div>
-                    <h3>List Your Products</h3>
-                    <p>Create detailed listings with photos and descriptions.</p>
                 </div>
-                <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-lock"></i>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3>Home Decor</h3>
+                        <p>980 products</p>
+                        <button class="btn btn-primary">Browse</button>
                     </div>
-                    <h3>Secure Transactions</h3>
-                    <p>Our escrow system ensures safe payments for both parties.</p>
                 </div>
-                <div class="step">
-                    <div class="step-icon">
-                        <i class="fas fa-truck"></i>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3>Clothing</h3>
+                        <p>1,560 products</p>
+                        <button class="btn btn-primary">Browse</button>
                     </div>
-                    <h3>Shipping & Delivery</h3>
-                    <p>Products are shipped directly with tracking information.</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3>Artwork</h3>
+                        <p>850 products</p>
+                        <button class="btn btn-primary">Browse</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1491147334573-44cbb4602074?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3>Craft Supplies</h3>
+                        <p>720 products</p>
+                        <button class="btn btn-primary">Browse</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1555037015-4584effe3b7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3>Vintage Items</h3>
+                        <p>1,035 products</p>
+                        <button class="btn btn-primary">Browse</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1596466596120-2a8e4b5d1a51?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3>Woodworking</h3>
+                        <p>610 products</p>
+                        <button class="btn btn-primary">Browse</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1573246123716-6b1782bfc499?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                    <div class="category-content">
+                        <h3>Pottery & Ceramics</h3>
+                        <p>490 products</p>
+                        <button class="btn btn-primary">Browse</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- Sell Page -->
+        <div id="sell" class="page">
+            <h2 class="section-title">Sell Your Products</h2>
+            
+            <div class="how-it-works">
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h3>Create Seller Account</h3>
+                        <p>Register as a seller to start listing your products.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h3>Take Quality Photos</h3>
+                        <p>Showcase your products with clear, well-lit images.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <h3>Write Detailed Descriptions</h3>
+                        <p>Include dimensions, materials, and unique features.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <h3>Set Your Price</h3>
+                        <p>Choose between fixed price or allow offers.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: var(--shadow);">
+                <h3 style="margin-bottom: 20px; text-align: center;">List a New Product</h3>
+                
+                <form id="product-form">
+                    <div class="form-group">
+                        <label for="product-title">Product Title</label>
+                        <input type="text" id="product-title" class="form-control" placeholder="Enter product title">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-category">Category</label>
+                        <select id="product-category" class="form-control">
+                            <option value="">Select a category</option>
+                            <option value="jewelry">Handmade Jewelry</option>
+                            <option value="home-decor">Home Decor</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="artwork">Artwork</option>
+                            <option value="craft-supplies">Craft Supplies</option>
+                            <option value="vintage">Vintage Items</option>
+                            <option value="woodworking">Woodworking</option>
+                            <option value="pottery">Pottery & Ceramics</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" class="form-control" placeholder="Describe your product in detail"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-price">Price ($)</label>
+                        <input type="number" id="product-price" class="form-control" placeholder="Enter price">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Product Images</label>
+                        <div style="border: 2px dashed #ddd; padding: 20px; text-align: center; border-radius: 4px;">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 40px; color: var(--gray); margin-bottom: 10px;"></i>
+                            <p>Drag & drop images here or click to browse</p>
+                            <button type="button" class="btn btn-outline">Select Images</button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">List Product</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <h2 class="section-title">About ArtisanMarket</h2>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 30px; margin-bottom: 40px;">
+                <div style="flex: 1; min-width: 300px; background: white; padding: 30px; border-radius: 8px; box-shadow: var(--shadow);">
+                    <h3 style="margin-bottom: 20px; color: var(--primary);">Our Story</h3>
+                    <p>ArtisanMarket was founded in 2023 with a simple mission: to create a thriving marketplace where artisans and crafters could connect directly with customers who appreciate handmade, unique products.</p>
+                    <p>We believe that behind every handmade item is a story, a passion, and a person who deserves to be supported for their craft.</p>
+                </div>
+                
+                <div style="flex: 1; min-width: 300px; background: white; padding: 30px; border-radius: 8px; box-shadow: var(--shadow);">
+                    <h3 style="margin-bottom: 20px; color: var(--primary);">Our Values</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                            <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--secondary);"></i>
+                            <strong>Supporting Artisans:</strong> We're committed to helping artisans grow their businesses.
+                        </li>
+                        <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                            <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--secondary);"></i>
+                            <strong>Quality over Quantity:</strong> We carefully curate our marketplace to ensure high-quality products.
+                        </li>
+                        <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                            <i class="fas fa-check-circle" style="position: absolute; left: 0; color: var(--secondary);"></i>
+                            <strong>Community Building:</strong> We foster connections between makers and buyers.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: var(--shadow); margin-bottom: 40px;">
+                <h3 style="margin-bottom: 20px; text-align: center; color: var(--primary);">Our Team</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px;">
+                    <div style="text-align: center;">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80') center/cover; margin: 0 auto 15px;"></div>
+                        <h4>Michael Johnson</h4>
+                        <p style="color: var(--gray);">Founder & CEO</p>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80') center/cover; margin: 0 auto 15px;"></div>
+                        <h4>Sarah Williams</h4>
+                        <p style="color: var(--gray);">Head of Community</p>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80') center/cover; margin: 0 auto 15px;"></div>
+                        <h4>David Chen</h4>
+                        <p style="color: var(--gray);">Technical Director</p>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <div style="width: 150px; height: 150px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80') center/cover; margin: 0 auto 15px;"></div>
+                        <h4>Emily Rodriguez</h4>
+                        <p style="color: var(--gray);">Creative Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <h2 class="section-title">Contact Us</h2>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 30px; margin-bottom: 40px;">
+                <div style="flex: 1; min-width: 300px; background: white; padding: 30px; border-radius: 8px; box-shadow: var(--shadow);">
+                    <h3 style="margin-bottom: 20px; color: var(--primary);">Get in Touch</h3>
+                    <p>Have questions about selling on our platform? Need help with an order? We're here to help!</p>
+                    
+                    <div style="margin-top: 30px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--light); display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                <i class="fas fa-map-marker-alt" style="color: var(--primary);"></i>
+                            </div>
+                            <div>
+                                <h4>Address</h4>
+                                <p>123 Artisan Street, Creative City, CC 12345</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--light); display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                <i class="fas fa-phone" style="color: var(--primary);"></i>
+                            </div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>(555) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--light); display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                <i class="fas fa-envelope" style="color: var(--primary);"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>support@artisanmarket.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="flex: 1; min-width: 300px; background: white; padding: 30px; border-radius: 8px; box-shadow: var(--shadow);">
+                    <h3 style="margin-bottom: 20px; color: var(--primary);">Send a Message</h3>
+                    
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="contact-name">Your Name</label>
+                            <input type="text" id="contact-name" class="form-control" placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-email">Email Address</label>
+                            <input type="email" id="contact-email" class="form-control" placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-subject">Subject</label>
+                            <input type="text" id="contact-subject" class="form-control" placeholder="Enter subject">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" class="form-control" placeholder="Enter your message"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: var(--shadow);">
+                <h3 style="margin-bottom: 20px; text-align: center; color: var(--primary);">Frequently Asked Questions</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                    <div>
+                        <h4>How do I create a seller account?</h4>
+                        <p>Click on the "Sign Up" button and select "Become a Seller." Follow the prompts to set up your account.</p>
+                    </div>
+                    
+                    <div>
+                        <h4>What are the fees for selling?</h4>
+                        <p>We charge a 5% transaction fee on each sale. There are no listing fees or monthly subscriptions.</p>
+                    </div>
+                    
+                    <div>
+                        <h4>How do payments work?</h4>
+                        <p>Buyers pay through our secure platform. Funds are released to sellers after order completion.</p>
+                    </div>
+                    
+                    <div>
+                        <h4>What should I do if I have an issue with an order?</h4>
+                        <p>Contact our support team within 7 days of delivery, and we'll help resolve the issue.</p>
+                    </div>
+                    
+                    <div>
+                        <h4>How long does it take for my listing to appear?</h4>
+                        <p>Listings are typically reviewed within 24 hours and published if they meet our guidelines.</p>
+                    </div>
+                    
+                    <div>
+                        <h4>Do you offer seller protection?</h4>
+                        <p>Yes, we offer protection against fraudulent chargebacks and unauthorized transactions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -594,11 +993,11 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">Sell on ArtisanMarket</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('categories')">Categories</a></li>
+                        <li><a href="#" onclick="showPage('sell')">Sell on ArtisanMarket</a></li>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -627,33 +1026,78 @@
     </footer>
 
     <script>
-        // Simple JavaScript for interactive elements
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation menu
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Find and activate the correct nav link
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.textContent.toLowerCase() === pageId) {
+                    link.classList.add('active');
+                } else if (pageId === 'home' && link.textContent === 'Home') {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Auth Modals
+        function showLogin() {
+            alert('Login modal would appear here. In a real application, this would open a login form.');
+        }
+        
+        function showSignup() {
+            alert('Signup modal would appear here. In a real application, this would open a registration form.');
+        }
+        
+        // Form Submissions
+        document.getElementById('product-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Product listing submitted! In a real application, this would be saved to a database.');
+            this.reset();
+        });
+        
+        document.getElementById('contact-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent! In a real application, this would be delivered to the support team.');
+            this.reset();
+        });
+        
+        // Interactive Elements
         document.addEventListener('DOMContentLoaded', function() {
             // Add to cart functionality
             const buyButtons = document.querySelectorAll('.btn-primary');
             buyButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const product = this.closest('.listing-card').querySelector('.listing-title').textContent;
-                    alert(`Added "${product}" to your cart!`);
-                });
+                if (button.textContent === 'Buy Now') {
+                    button.addEventListener('click', function() {
+                        const product = this.closest('.listing-card').querySelector('.listing-title').textContent;
+                        alert(`Added "${product}" to your cart!`);
+                    });
+                }
             });
             
             // Make offer functionality
             const offerButtons = document.querySelectorAll('.btn-outline');
             offerButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const product = this.closest('.listing-card').querySelector('.listing-title').textContent;
-                    alert(`Offer dialog for "${product}" would open here.`);
-                });
-            });
-            
-            // Auth buttons functionality
-            const authButtons = document.querySelectorAll('.auth-buttons .btn');
-            authButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const action = this.textContent.trim();
-                    alert(`${action} modal would open here.`);
-                });
+                if (button.textContent === 'Make Offer') {
+                    button.addEventListener('click', function() {
+                        const product = this.closest('.listing-card').querySelector('.listing-title').textContent;
+                        alert(`Offer dialog for "${product}" would open here.`);
+                    });
+                }
             });
         });
     </script>
